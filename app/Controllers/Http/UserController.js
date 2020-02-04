@@ -35,6 +35,18 @@ class UserController {
     }
 
   }
+
+  async login ({request, response, auth}) {
+    try {
+      const {email, password} = request.all()
+
+      const validaToken = await auth.attemp(email, password)
+
+      return validaToken
+    } catch (error) {
+      return response.status(500).send({error: `Erro: ${error.menssage}`})
+    }
+  }
 }
 
 module.exports = UserController
